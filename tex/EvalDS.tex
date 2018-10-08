@@ -1,0 +1,93 @@
+\subsection{Domain Score (DS)}
+\label{sec:ds}
+
+\newtext{For a rapid evaluation an even higher abstraction level might be needed to gauge allocation / mapping benefits. For this, we develop the Domain Score (DS). Rather than estimating performance of an individual application on a platform, DS directly assesses costs and benefits of the platform to all applications in a domain.}
+\newtext{DS relies on profiling all domain applications (only required once) to determine the total processing demand for each function type $D_P(t)$ and the communication demand between each function type pair $D_C(t_o,t_i)$. DS allows for relative comparison.} 
+\newtext{DS quantifies the benefits of moving function types $t_{+}$ from SW to HW, and the penalties of moving $t_{-}$ from HW to SW with respect to processing and communication. In contrast to the analytical model, DS computes the score at once for the whole domain (i.e. incorporating all applications). No further aggregation and averaging are required.} 
+
+%Given the amount of applications a domain and the myriad domain platform design options, a detailed simulations or detailed analytical approaches that include scheduling effects are prohibitively expensive to execute. Instead, our approach focuses on overall processing demand (i.e. how many operations) of the domain and processing supply by the architecture (symmetric for communication). The dynamic composition score quantifies the benefits moving a composition $C$ from processor to hardware mapping. DS estimates the benefits stemming from processing and communication mapping, scales them using dynamic weights (tuned to domain properties) and includes the additional cost of hardware implementation. 
+
+%\vspace{-10pt}
+\begingroup\makeatletter\def\f@size{9}\check@mathfonts
+\begin{equation}
+\begin{split}
+\label{eq:scoreDS}
+	Score &= B_{P} * w_{P} + B_{C} * w_{C}
+	%cost &= \left\vert{C \cap SW}\right\vert
+\end{split}
+\end{equation}
+\endgroup
+
+In Eq.~\eqref{eq:scoreDS}, \newtext{$B_P$ and $B_C$ are the benefits of processing} (~\secref{sub:ben_proc}) and communication (~\secref{sub:ben_comm}) \newtext{if the functions are switched between SW and HW, respectively}. They are calculated considering both aggregated benefits and appearances. $w_P$ and $w_C$ are the weights to scale both benefits. The weights are dynamically adjusted tracking performance bottlenecks, where processing or communication might be more important. Obtaining these weights will be discussed in Sec.~\ref{sub:weight}. %The $cost$ is defined the number of additional function types (i.e. HWACCs) to realize the composition in HW.
+
+
+\subsubsection{Processing Benefit}
+\label{sub:ben_proc}
+Eq.~\ref{eq:comp} \newtext{estimates the processing benefit $B_P$ as execution time reduction / increase of the domain when mapping function types $t_{+}$ from SW to HW and $t_{-}$ from HW to SW, only taking computation demand and supply into account.}
+
+%\vspace{-10pt}
+\begingroup\makeatletter\def\f@size{8.5}\check@mathfonts
+\begin{equation}
+\begin{split}
+\label{eq:comp}
+    B_{P} &= b_{P}(\{t_{+}\}) - b_{P}(\{t_{-}\}) \\
+	b_{P}(X) &= \sum_{ t_{i} \in X } (\frac{D_{P}(t_{i})}{S_{SW}} - \frac{D_{P}(t_{i})}{S_{HW}}) * P(t_{i})
+\end{split}
+\end{equation}
+\endgroup
+
+In Eq.~\ref{eq:comp}, $S_{SW}$ and $S_{HW}$ are the estimated execution speed of SW and HW, respectively. \newtext{For each function type $t_{i}$ mapped from SW to HW, the overall difference of execution time between SW and and HW processing is calculated. This difference is then multiplied by the appearance probability $P$ of $t_{i}$ to prioritize frequently appearing compositions. The sum of the scaled processing benefits/disadvantage of these function types yields the processing benefit $B_P$ considering $t_{+}$ and $t_{-}$ switch.}
+ 
+\subsubsection{Communication Benefit}
+\label{sub:ben_comm}
+The communication benefit is defined as the change in bus usage (transfer delay) due to switch mapping between sW and HW. It considers four aspects: \newtext{(1) $t_{+}$ saved communication with other HW-mapped functions, (2) $t_{+}$ additionally exposed HW/SW communication with other SW-mapped functions, (3) $t_{-}$ exposed SW/HW communication with other HW-mapped functions, and (4) $t_{-}$ saved communication with other SW-mapped functions. Communication between SW-mapped functions is assumed to be hidden in the memory hierarchy.} 
+
+%\vspace{-10pt}
+\begingroup\makeatletter\def\f@size{8.5}\check@mathfonts
+\begin{equation}
+\begin{split}
+\label{eq:comm}
+    B_{C} &=  b_{C}(\{t_{+}\}, HW \setminus \{t_{-}\}) - b_{C}(\{t_{+}\}, SW \setminus \{t_{+}\}) \\
+        &- b_{C}(\{t_{-}\}, HW \setminus \{t_{-}\}) + b_{C}(\{t_{-}\}, SW \setminus \{t_{+}\}) \\
+    b_{C}(X, Y) &= \sum_{ t_{i} \in X, t_{j} \in Y } D_{C}(t_{i},t_{j}) / S_{C} * P(t_{i},t_{j})
+\end{split}
+\end{equation}
+\endgroup
+
+Eq.~\eqref{eq:comm} captures the communication benefits, assuming $S_C$ is the communication speed of buses. It computes the saved versus exposed data transfer volume $D_C$ on bus divided by the communication speed $S_C$ to yield the change transfer delay. The change in delay scaling with appearance probability and its accumulation across all applications yields the communication benefit $B_C$, which is the change in transfer delay for the whole domain.
+
+
+\subsubsection{Dynamic Weights}
+\label{sub:weight}
+Communication and processing demands vary by domains. In result, e.g. for a processing dominated domains (e.g. computer vision) targeting processing has priority resulting in the biggest improvements. While the benefits computed before already capture some of it, a global domain scope is needed to weigh the importance of communication versus processing of the whole domain. To capture this, we define the weights $w_C$ and $w_P$. 
+However, each mapping to HW alters the effective communication vs. processing split and may change the properties and bottlenecks of the remaining compositions in a domain. For example, once processing intensive compositions are mapped to HW, the remaining compositions are communication-intensive. Therefore, the weights cannot be static but must be dynamically updated in each iteration to adjust for past mapping decisions.
+%\vspace{-5pt}
+
+\begingroup\makeatletter\def\f@size{8.5}\check@mathfonts
+\begin{equation}
+\begin{split}
+\label{eq:weight}
+	&w_{P} = \frac{\sum_{t_{i} \in SW} D_{P}(\{t_{i}\}) }{ \sum_{t_{i} \in SW} D_{P}(\{t_{i}\}) + \sum_{ \{t_{i}, t_{j}\} \nsubseteq HW} D_{C}(\{t_{i},t_{j}\}) }\\
+	&w_{C} = 1 - w_P\\	
+\end{split}
+\end{equation}
+\endgroup
+
+Eq.~\eqref{eq:weight} illustrates the dynamic weight calculation. It uses the total remaining domain processing and communication demand (not mapped to HW) to determine the current performance bottleneck. A higher total demand of non-mapped (i.e. SW) processing raises the processing weight $w_P$. Conversely, if communication dominates the remaining domain, the communication demand $w_C$ will increase. 
+
+%\secref{sub:dcs} and \secref{sec:GALS-DSS} will use the DS in the context of the Dynamic Score Selection (DSS) and GenetIc Domain Exploration (GIDE) algorithms. Since DSS greedily choosing the most promising function types $t_{+}$ for HW implementation, the DS only calculates the benefit of $t_{+}$ and the cost of consumed HW budget. However \ga comparing the switch of function types ($t_{+}$, $t_{-}$) implementation between SW and HW within certain budget, then DS considers the effect of both $t_{+}$ and $t_{-}$, and ignores the cost of budget consuming.
+
+%\begingroup\makeatletter\def\f@size{8.5}\check@mathfonts
+%\begin{equation}
+%\begin{split}
+%\label{eq:score}
+%Score &= ( B_{P} * w_{P} + B_{C} * w_{C} )\\
+%B_{P} &= D_{P}(t_{+}) - D_{P}(t_{-}) \\
+%B_{C} &= \sum_{t_{I} \in HW}^{} D_{C}(t_{I}, t_{+}) - D_{C}(t_{I}, t_{-}) \\
+%&+ \sum_{t_{I} \in SW}^{} D_{C}(t_{I}, t_{-}) - D_{C}(t_{I}, t_{+}) \\
+%%B_{C} &= \sum_{t_{I} \in HW}^{} ( D_{C}(t_{I}, t_{+}) - D_{C}(t_{I}, t_{-}) ) + \sum_{t_{I} \in SW}^{} ( D_{C}(t_{I}, t_{-}) - D_{C}(t_{I}, t_{+}) )\\
+%w_{P} &= \frac{\sum_{t_{I} \in SW} D_{P}(\{t_{I}\}) }{ \sum_{t_{I} \in SW} D_{P}(\{t_{I}\}) + \sum_{ \{t_{I}, t_{J}\} \nsubseteq HW} D_{C}(\{t_{I},t_{J}\}) }\\
+%w_{C} &= 1 - w_P
+%\end{split}
+%\end{equation}
+%\endgroup
