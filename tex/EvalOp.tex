@@ -2,8 +2,8 @@
 \label{sec:EvaOp}
 
 To set the stage for our proposed domain DSE approach \newtext{(DSS and \ga)},
-this sections introduces our assumptions / formalizations about the
-target platform \newtext{and different abstract-level evaluation options.}
+this sections introduces our assumptions / formalization about the
+target platform in~\secref{sec:Platform}, \newtext{and different evaluation options of domain platform, Analytic Evaluation} in~\secref{sec:Ana} and Domain Score (DS) in~\secref{sec:ds}. ~\secref{sec:eva:sum} discusses the accuracy and speed trade-off of these evaluation options.
 
 Evaluating domain platforms is challenging due to the enormous design space needing to evaluate (a) the performance of each application given allocation and mapping, and (b) systematic aggregation across all applications to determine the platform benefit. 
 For the purpose of this publication, we primarily focus on domain throughput improvement to assess the domain platform benefit. Domain throughput improvement is the average of all applications' throughput improvement each over their own pure SW implementation. 
@@ -11,7 +11,7 @@ For the purpose of this publication, we primarily focus on domain throughput imp
 Evaluating an individual application / platform follows a speed / accuracy trade-off. Transaction Level Models (TLM) can provide a reasonably high accuracy at cost of long simulation times limiting the number of evaluable design points in a given duration. More abstract and dramatically faster evaluation is desired to evaluate many more points at cost of accuracy. 
 This section proposes two approaches and compares them against TLM simulation.
 
-\input{tex/Platform.tex}
+\input{tex/EvalPlatform.tex}
 
 
 \subsection{Analytic Evaluation}
@@ -57,7 +57,7 @@ The processing acceleration of an ACC depends on its frequency and the paralleli
 
 
 \subsection{Domain Score (DS)}
-\label{sub:ds}
+\label{sec:ds}
 
 \newtext{For a rapid evaluation an even higher abstraction level might be needed to gauge allocation / mapping benefits. For this, we develop the Domain Score (DS). Rather than estimating performance of an individual application on a platform, DS directly assesses costs and benefits of the platform to all applications in a domain.}
 \newtext{DS relies on profiling all domain applications (only required once) to determine the total processing demand for each function type $D_P(t)$ and the communication demand between each function type pair $D_C(t_o,t_i)$. DS allows for relative comparison.} 
@@ -152,10 +152,11 @@ Eq.~\eqref{eq:weight} illustrates the dynamic weight calculation. It uses the to
 
 
 \subsection{Trade-off: Evaluation Speed / Accuracy }
+\label{sec:eva:sum}
+
 To compare the the evaluation approaches in terms of accuracy and speed, we analyze them for a set of 40 real vision applications on 100 different platforms (with the same HW budget=5) against execution on a cycle-approximate TLM. % please name the few
 \tabref{tab:fidelity} illustrates the trade-off looking at fidelity instead of accuracy as the evaluation approaches are compare design alternatives. TLM is defined as 100\% fidelity for this comparison.
 
-\label{sec:eva:sum}
 \begin{table}[h]
 	\caption{Fidelity and Speed: DS, Analytic, TLM}
 	\label{tab:fidelity}
