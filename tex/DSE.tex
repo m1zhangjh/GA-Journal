@@ -1,0 +1,16 @@
+\section{Domain DSE}
+\label{sec:DSE}
+
+%This section proposes a novel domain-specific DSE for HW/SW partitioning for a domain of applications. The key insight is to broaden the scope of the exploration heuristic from a single app in isolation to a group of applications. In general, different optimization goals are possible, e.g. minimize power consumption or maximize throughput with various constraints (e.g. cost, area). In this work, we focus on throughput improvement for all applications within a certain HW budget.
+
+In next \secref{sec:DSS} and \secref{sec:GA}, \newtext{this paper proposes two novel domain-specific DSE, DSS and GIDE,} for HW/SW partitioning for a domain of applications. The key insight is to broaden the scope of the exploration heuristic from a single app in isolation to a group of applications. In general, different optimization goals are possible, e.g. minimize power consumption or maximize throughput with various constraints (e.g. cost, area). In this work, we focus on throughput improvement for all applications within a certain HW budget.
+
+Using the domain formalization in \secref{sec:Domain}, DSS and \ga address the problem as follows: 
+\begin{problem}[DS-DSE]
+	\label{p:dse}
+	\normalfont{Given a domain \textit{G} and a HW budget $N$ (area), find a HW/SW partition of \textit{T} (the set of domain function types) that maximizes average throughput improvement \footnote{In DSE problem, there are multiple objectives, e.g. throughput, delay, power consumption, and area. To simplify problem and clarify result discussion, this paper only focuses on one objective throughput with the fixed area limitation (area). Multiple-objective DS-DSE problems will be in the future work.} over pure SW execution for all $\textit{g} \in \textit{G}$.}
+\end{problem}
+
+
+\input{tex/DSS-DSE.tex}
+\input{tex/GA-DSE.tex}

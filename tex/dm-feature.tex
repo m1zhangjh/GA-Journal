@@ -1,0 +1,89 @@
+\subsection{Domain Features}
+\label{sec:features}
+Domain features lay the foundation for automatic exploration. It is essential to capture behavioral similarity to assess processing needs, and structural similarities to assess communication / topology requirements. Aligned with the domain definition, we identify commonly used functions and function patterns. We express common functions as the function types of actors that repeat within and across applications. Function patterns are repeating compositions these function types (i.e. identical subgraphs). Different lengths of compositions are considered. For example, application $g0$ in Fig.~\ref{fig:Apps}, has three, two and one composition of a degree one, two and three, respectively. The function type composition $\{t_{B}, t_{C}\}$ (which is of degree 2) appears in application $g0$ (actors $B0$,$C0$) and $g1$ ($B1$,$C1$). \tabref{tab:egFeature} lists the compositions of the domain.
+
+%removed the detour of instances. Directly explained it as types. no addl. formula neede
+%The definitions of actor composition $c$ and function type composition $C$ are given in Eq.~\ref{eq:comps}.   
+%
+%\vspace{-10pt}
+%%\begingroup\makeatletter\def\f@size{9}\check@mathfonts
+%\begin{equation}
+%\begin{split}
+%\label{eq:comps}
+	%c = \{a_j, a_k,...\}, \quad C = \{t_J, t_K,...\}\\
+%\end{split}
+%\end{equation}
+%%\endgroup
+%%\vspace{-10pt}
+
+A composition of degree one ($\left\vert{C}\right\vert = 1$) contains a single function type. All compositions $\left\vert{C}\right\vert = 1$, represent the function types shared across the domain. Since compositions $C$ can capture both common functions (behavioral similarity) and function patterns (structural similarity), this paper chooses function type compositions $C$ to express domain features. In addition to the subgraph of function types, we focus on three aspects to characterize compositions: probability of appearance, processing demand and communication demand. 
+
+Compositions that appear more often across applications are more important for the domain than infrequent compositions. To quantify the importance, we define appearance probability $P$ as per Eq.~\eqref{eq:p}. 
+
+%\vspace{-10pt}
+\begin{equation}
+\begin{split}
+\label{eq:p}
+P(C_i) = (\sum_{g_j \in G} \left\vert \{ Instance(C_i) \in g_j \} \right\vert) / \left\vert{G}\right\vert \\
+%	P(C) = \left\vert{ \{g \vert c \in g, c \in C \} }\right\vert / \left\vert{G}\right\vert \\
+\end{split}
+\end{equation}
+
+
+$P$ is probability that an instance of composition $C_i$ appears in a domain application. The composition $\{t_{B}, t_{C}\}$ in Fig.~\ref{fig:Apps} and Table~\ref{tab:egFeature} appears in all applications ($P$ = 100\%). Whereas $\{t_A, t_B\}$ and $\{t_C, t_D\}$ each appear only in one ($P$ =50\%).  
+
+A key challenge to enable domain DSE is how to identify processing and communication demands across applications which are necessary to guide resource allocation. However, considering each individual application is impractical. To obtain a domain-level view, we aggregate the demands for each composition as defined in Eq.~\eqref{eq:demand}.
+
+%\vspace{-8pt}
+\begin{equation}
+\begin{split}
+\label{eq:demand}
+	&D_P(C_i=\{t_j\}) = \sum_{g_k \in G} \sum_{ a_l = Instance(t_j) \in g_k} a_l.d_P\\
+	&D_C(C_i=\{t_i, t_j\}) = \sum_{g_k \in G} \sum_{e_l \in g_k, e_l=\{t_i,t_j\}} e_l.d_C
+\end{split}
+\end{equation}
+%\vspace{-10pt}
+
+%In general, DSE compares the processing workload $d_P$ among computing actors to decide which to accelerate and analyzes the communication $d_C$ between them to avoid data transfer. However, the individual $d_P$ and $d_C$ is a mess for DS-DSE. The DS-DSE needs the features in domain level to decide the partitioning of function types. 
+
+The processing demand $D_P$ is calculated for each composition $C_i$ with a degree of one as the sum over all applications and all instances of the type $t_j$ (e.g. $D_P(t_B)$ = 500). Communication demand is computed for each pair of actor types (i.e. compositions of degree two). It is the sum of the communication demand for each edge of that type over all applications ($D_C(\{t_B, t_C\})$ = 100). 
+
+%\vspace{-10pt}
+\begin{equation}
+\begin{split}
+\label{eq:CS}
+	&CS = \{C_{0}, C_{1}, ..., C_{z}\}\\
+	&C_{i} (P, D_P, D_C)\\
+\end{split}
+\end{equation}
+%\vspace{-10pt} 
+
+In summary, the domin features are captured as a set of compositions, where each composition $C_i$ is defined by its appearance probability $P$, processing demand $D_{P}$ (for $\left\vert{C_i}\right\vert = 1$), and communication demand $D_{C}$ (for $\left\vert{C_i}\right\vert = 2$).
+Table~\ref{tab:feature} shows the general view of the selected domain features. 
+
+%GSTODO table is redundant in my view
+\begin{table}[h]
+	\caption{Domain Features}
+	\label{tab:feature}
+	\centering
+	\begin{tabular}{p{0.06\linewidth}|p{0.22\linewidth}|p{0.15\linewidth}|p{0.15\linewidth}|p{0.18\linewidth}}
+		\toprule
+		\multicolumn{2}{c|}{Composition}& Appearance Probability& Processing Demand& Communication Demand\\
+		\midrule
+		\hline
+		$C_{0}$&				$\{t_{A}\}$&								$P(C_{0})$&					$D_{P}(C_{0})$& --\\
+		$C_{1}$& 				$\{t_{B}\}$&								$P(C_{1})$&					$D_{P}(C_{1})$& --\\
+		$...$& 					$...$&									$...$&							$...$&	--\\
+		$C_{x}$& 				$\{t_{N}\}$&								$P(C_{x})$&					$D_{P}(C_{x})$& --\\
+		\hline
+		$C_{x+1}$& 			$\{t_{A}, t_{B}\}$&					$P(C_{x+1})$&				--& $D_{C}(C_{x+1})$\\
+		$C_{x+2}$& 			$\{t_{A}, t_{C}\}$&					$P(C_{x+2})$&				--& $D_{C}(C_{x+2})$\\
+		$...$& 					$...$&									$...$&							--&			$...$\\
+		$C_{y}$& 				$\{t_{I}, t_{N}\}$&					$P(C_{y})$&					--& $D_{C}(C_{y})$\\
+		\hline
+		$C_{y+1}$& 			$\{t_{A}, t_{B}, t_{C}\}$&		$P(C_{y+1})$&				--&	--\\
+		$...$& 					$...$&									$...$&							--&	--\\
+		$C_{z}$& 				$\{t_{I}, t_{J}, ...,t_{N}\}$&		$P(C_{z})$&					--&	--\\
+		\bottomrule
+	\end{tabular}
+\end{table}

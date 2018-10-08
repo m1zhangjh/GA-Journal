@@ -1,0 +1,65 @@
+\subsection{Domain Analyzer}
+\label{sec:analyzer} 
+
+Domain analyzer extracts the behavioral and structural similarities from the applications within a domain. It expresses these similarities using the domain feature definitions of \secref{sec:features}. The computed domain features then feed into our domain-specific DSE described in \secref{sec:DSE}.
+%This paper primarily focuses on streaming applications, which have significant functional and structural similarities within a domain. The extracted similarities 
+
+Algorithm~\ref{alg:analysis} overviews the domain analyzer. The analyzer is comprised of domain analysis and application analysis. The domain analysis (lines 1-11) first calls application analysis for each application to obtain the list of function type compositions ($CList$ in line3). Then the domain analysis merges compositions from all applications, counts their appearance frequency (lines 4-8), and aggregates their processing and communication demand ($D_P, D_C$ in line 9). Finally, the domain analysis calculates each composition appearance probability ($P$ in line 11) and returns the the domain features as a set of function type compositions.
+
+\begin{algorithm}
+\caption{Domain Analyzer}
+\label{alg:analysis}
+\begin{algorithmic}[1]
+{\footnotesize
+\Function{dmAnalysis}{$G$}
+	\For{\textbf{each} $g \in G$}
+		\State $CList = \Call{appAnalysis}{g}$
+		\For{\textbf{each} $C \in CList$}
+				\If {$C \in CS$}
+					\State $Freq(C)$++
+				\Else
+					\State $CS = CS \cup \{C\}; Freq(C) = 1$
+				\EndIf
+				\State $D_{P}(C)$ += $C.D_{P}; D_{C}(C)$ += $C.D_{C}$
+		\EndFor
+	\EndFor
+	\For{\textbf{each} $C \in CS$}
+		\State $P(C) = Freq(C) / \left\vert{G}\right\vert$
+	\EndFor
+	\Return $CS$
+\EndFunction
+\item[]
+\Function{appAnalysis}{$g$}
+	\For{\textbf{each} $a \in g.A$}
+		\State $cList.add( \{a\} )$
+	\EndFor
+	\For{$k \in \{1,2,\dots\}$}
+	\Comment $k$ is composition degree
+		\For{\textbf{each} $c \in\{cList \cap \left\vert{c}\right\vert = k\}$ }
+			\For{\textbf{each} $a_{next} \gets c.a_{tail}().a_{outNeighbor}()$}
+				\If{$a_{next} \notin c$}
+					\State $cList.add( c \cup \{a_{next}\} )$
+				\EndIf
+			\EndFor
+		\EndFor
+		\IIf {$\{c \vert c \in cList \cap \left\vert{c}\right\vert = k$+$1\} = \emptyset$} Break
+	\EndFor
+
+	\For{\textbf{each} $c \in cList$}
+			\State $C$ = \{$a.t \vert a \in c$\}
+			\IIf {$\left\vert{c}\right\vert = 1$} $C.D_{P} = a.d_{P},$ which $a \in c$
+			\IIf {$\left\vert{c}\right\vert = 2$} $C.D_{C} = e.d_{C},$ which $ e.a_{src,dst} \in c$
+			\If {$C \in CList$}
+				\State $CList[C].updateD(C.D_{P},C.D_{C})$
+			\Else
+				\State $CList.add(C)$
+			\EndIf
+	\EndFor
+	\Return $CList$
+\EndFunction
+}
+\end{algorithmic}
+\end{algorithm}
+
+The application analysis (lines 12-28) creates a list of actor compositions (lines 12-20) and then abstracts from actor instances into function type compositions (lines 21-28). The analysis starts with each actor from the application as 1-degree composition (lines 13-14). Then for each $k$-degree composition, it adds one more actor to it to build a $k+1$ degree composition (lines 15-19). When no actor can be added anymore, actor compositions detection stops (line 20). After that, the analysis obtains a function type composition from each actor composition(lines 21-22). It merges duplicated function type compositions and aggregates their processing/communication demand (lines 23-28). It returns the list of compositions of this application, with their aggregated processing and communication demands. 
+%The extracted similarities will be used as the input model for our proposed domain-specific DSE.

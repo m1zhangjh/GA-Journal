@@ -1,0 +1,34 @@
+\section{Domain Formalization}
+\label{sec:Domain}
+
+The foundation of any systematic approach for domain-specific-DSE is the formalization of a domain and its features (metrics) to quantitatively reason about the domain. This section defines the domain scope and its features (metrics). They capture the behavioral and structural features of a domain showing what functions are commonly used and how they are composed. Defining these features and metrics lays the foundation for automatic domain analysis and exploration.
+
+\input{tex/dm-def.tex}
+\input{tex/dm-feature.tex}
+\input{tex/dm-feature-ana.tex}
+
+
+
+
+
+
+% GA domain formalization
+
+%A domain is a set of applications, which share common functions and common patterns as introduced in \cite{zhang100ds}. Eq.~\ref{eq:domain} presents domain concept symbolically. A domain $G$ is a set of streaming applications ($g_{0}$ .. $g_{N}$), each captured as a dataflow graph \cite{stuijk2006sdf}. Each application $g_i$ contains a set $A$ of processing actors ($a_0$ .. $a_n$) and a set of $E$ edges ($e_0$ .. $e_m$) representing the communication between actors. Each actor $a_i$ is an instance of a function type $t$ with an instance-specific processing demand $d_{P}$ (\# of operations\footnote{To simplify explanation and clarity in result discussion, we abstract processing to a single dimension. More dimensions are possible and only affect the evaluation.}). Multiple instances of the same function type $t$ may exist within and across applications within the domain. A domain contains a set $T$ of function types. Each edge $e_i$ is the directed communication $a_{src}$ to $a_{dst}$ with a communication demand of $d_{C}$ (\# of transferred bytes). 
+
+%\begin{equation}
+%\begin{split}
+%\label{eq:domain}
+%	&G = \{g_{0}, g_{1}, ..., g_{N}\}, \quad g_{i} = (A, E)\\
+%	&A = \{a_{0}, a_{1}, ..., a_{n}\}, \quad E = \{e_{0}, e_{1}, ..., e_{m}\}\\
+%	&a_{i} (t, d_{P}), \quad e_{i} ((a_{src}, a_{dst}), d_{C})\\
+%		&T = \{t_{A}, t_{B}, ..., t_{X}\}
+%\end{split}
+%\end{equation}
+
+% potentially move this defintion to GALS approach.
+%Given the formalization, the problem can be defined as follows:
+%\begin{problem}[DS-DSE]
+%\label{p:dse}
+%	\normalfont{Given a domain \textit{G} and a HW budget $N$ (area), find a HW/SW partition of \textit{T} (the set of domain function types) that maximizes average throughput improvement over pure SW execution for all $\textit{g} \in \textit{G}$.}
+%\end{problem}

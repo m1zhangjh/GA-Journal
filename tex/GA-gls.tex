@@ -1,0 +1,15 @@
+\subsection{\ga with Guided Local Search}
+\label{sec:GALS}
+
+Purely random mutation requires many generations to converge. To enhance the exploration performance, \ga employs a guided local search inspired by ~\cite{wen2011heuristic}. For each chromosome it searches for the best neighbor to propagate (instead of random mutation). The evaluation methodology for the local search is crucial for the overall exploration performance. \ga uses a hybrid approach between DS and analytical model. In order to simplify explanation and to enable details analysis, we introduce two simpler variants first: \gads and \gaana.
+
+%It first finds the best neighbor of a chromosome by exhaustively switching two genes with opposite states (i.e. replacing a function type for HW implementation), and then evaluates the benefit of each swap. With respect to evaluation method, we proposed three variations: (1) \gads, (2) \gaana, and (3) \gah which is the ultimate \ga implementation. 
+
+%Instead of the random mutation implemented in GA-Random,  \emph{\gads} performs a guided local search, see \figref{fig:GADSS}, 
+
+%We consider three variants (sorted by complexity) for guided local search: (1) a guided local search using the proposed Domain Score (\gads), (2) a guided local search using the proposed Analytical Model (\gaana) for evaluation, (3) our complete approach, \ga, which employs a hybrid DS and Analytical Model, combining their benefits.  
+
+
+\input{tex/GALS-DSS}
+\input{tex/GALS-ana}
+\input{tex/GALS-hybrid}

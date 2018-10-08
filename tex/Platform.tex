@@ -1,0 +1,17 @@
+%\vspace{-4pt}
+\subsection{Target Platform}
+\label{sec:Platform}
+
+To balance flexibility and efficiency, domain platform includes hardware accelerators (HWACC) and programmable processors (CPU, GPU, DSP), similar to current platforms. However, the number of HWACCs will increase dramatically, where individual HWACCs are less monolithic but smaller and configurable. HWACCs can be composed to accelerate larger kernels (or even applications), e.g. ACC-Rich MPSoCs \cite{cong2014accelerator} and FLP \cite{tabkhi2014function}. 
+
+\begin{figure}[h]
+	%\vspace{-4pt}
+	\centering
+	\includegraphics[width=.65\linewidth]{fig/pPlat.pdf}
+	%\vspace{-6pt}
+	\caption{Target Platform}
+	\label{fig:plat}
+	\vspace{-4pt}
+\end{figure}
+
+\figref{fig:plat} illustrates the target platform for the context of this work. A streaming application $A$,$B$,$C$,$D$ is mapped across SW and HW. Each HWACC has a dedicated SPM. All HWACCs are aggregated to a HW partition which a shared SPM across all HWACCs. HWACCs can communicate with each other; their communication traffic is hidden from system communication fabric (e.g. $B$, $C$). For simplicity, we assume direct n:n communication within the HW partition. Conversely, HWACCs and SW kernels communicate through the system streaming fabric (e.g. $A$ to $B$, and $C$ to $D$) which results in throughput penalties. 

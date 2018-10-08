@@ -1,0 +1,3 @@
+\subsubsection{\gaana}
+
+The just introduced \emph{\gads} favors speed over accuracy using the DS for evaluation in the neighborhood search. While DS is the fastest evaluation, it has limited accuracy (see \secref{sec:eva:sum}). In order to quantify the impact, we introduce the more accurate \emph{\gaana}. It realizes the same search as \emph{\gads}, however, uses the analytical model for evaluation. As the analytical model computes the performance of a single application, each application in the domain has to be evaluated and the results aggregated to determine the chromosome's fitness. This is identical to the \emph{evaluation} in \emph{\garand}. In result, the \gaana performs a very accurate local search, at the cost of exploration speed. 

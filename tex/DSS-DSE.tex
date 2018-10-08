@@ -1,0 +1,58 @@
+\section{Dynamic Score Selection (DSS)}
+\label{sec:DSS}
+
+This section introduces a new algorithm: dynamic score selection (DSS). It starts with a pure SW platform and then iterates through greedily selecting a composition candidate from domain features for HW realization. \newtext{Our greedy approach uses the Dynamic Composition Score (DCS: based on Domain Score) to estimate which composition is the most promising to improve domain performance.} This section, first introduces the dynamic composition score and then the DSS algorithm.
+
+
+\subsection{Dynamic Composition Score (DCS)}
+\label{sub:dcs}
+
+Given the amount of applications a domain and the myriad domain platform design options, a detailed simulations or detailed analytical approaches that include scheduling effects are prohibitively expensive to execute. Instead, our approach focuses on overall processing demand (i.e. how many operations) of the domain and processing supply by the architecture (symmetric for communication). The dynamic composition score quantifies the benefits moving a composition $C$ from processor to hardware mapping. DCS estimates the benefits stemming from processing and communication mapping, scales them using dynamic weights (tuned to domain properties) and includes the additional cost of hardware implementation. 
+
+%\vspace{-10pt}
+\begingroup\makeatletter\def\f@size{9}\check@mathfonts
+\begin{equation}
+\begin{split}
+\label{eq:scoreDSS}
+	DCS &= ( B_{P} * w_{P} + B_{C} * w_{C} ) / cost\\
+	cost &= \left\vert{C \cap SW}\right\vert
+\end{split}
+\end{equation}
+\endgroup
+
+In Eq.~\eqref{eq:scoreDSS}, $B_P$ and $B_C$ are the benefits of processing and communication if the composition is mapped on HW, respectively. \newtext{They are calculated considering both aggregated benefits and appearances, see}~\secref{sub:ben_proc} and ~\secref{sub:ben_comm}. \newtext{$w_P$ and $w_C$ are the weights to scale both benefits (}~\secref{sub:weight}). The weights are dynamically adjusted tracking performance bottlenecks, where processing or communication might be more important. Since the the DSS dynamic choosing the promising composition $C$ (multiple function types $t$) for HW implement, the consumed HW budget is need to be taken into account. The $cost$ is defined the number of additional function types (i.e. HWACCs) to realize the composition in HW. 
+
+
+
+\subsection{DS-DSE with Dynamic Score Selection (DSS)}
+\label{sub:dss}
+
+Dynamic Score Selection (DSS) implements Domain DSE based on DCS (Sec.~\ref{sub:dcs}). Algorithm~\ref{alg:dss} illustrates the flow. DSS starts with a pure SW mapping (line 1-2) and then greedily select the best candidate for HW mapping. Candidates are all compositions (and their contained function types) of the domain (line 3). DSS evaluates their benefits using the DCS (line 5-8) given current mapping and selects highest scored candidate. With a positive score, ie. performance improvement (line9), it maps all its SW-mapped function types to HW (lines 10-12). Subsequently it updates candidates by removing HW-mapped compositions (line 13). The loop (starting at line 4) repeats until the HW budget is exhausted (line 4) or no further improvement is possible (all negative score) (line 15).
+
+\begin{algorithm}
+\caption{DSS: Dynamic Score Selection}
+\label{alg:dss}
+\begin{algorithmic}[1]
+{\footnotesize
+\State $SW \gets T$
+\State $HW \gets \emptyset$
+\State $Cand \gets \{C \vert C \in CS\}$
+\Comment Candidates
+\While{$\left\vert{HW}\right\vert < HWbudget$}
+	\LineComment Processing/Communication weight calculation
+	\State $(w_{P}$, $w_{C}) = weightCal(CS, SW, HW)$
+	\LineComment Calculate each candidate $C$ score, return the highest
+	\State $C = scoreHighest(Cand, CS, SW, HW, w_{P}, w_{C})$
+	\If{$C.Score > 0$}
+		\For{\textbf{each} $t \in C \cap SW$}
+			\State $SW = SW \setminus \{t\}$
+			\State $HW = HW \cup \{t\}$
+		\EndFor
+		\State $Cand = Cand \setminus \{C.t \vert C \subseteq HW \}$
+	\Else
+		\State Break \Comment No improvement
+	\EndIf
+\EndWhile
+}
+\end{algorithmic}
+\end{algorithm}

@@ -1,0 +1,32 @@
+\section{\ga}
+\label{sec:GA}
+
+Novel exploration approaches are needed that broaden the scope of DSE from single application to a domain of applications in order to design a domain-specific platforms. The enormous design space renders exhaustive search infeasible, requiring heuristics for sparse sampling. Genetic Algorithm is one of efficient heuristics algorithms with high flexibility. This section presents GenetIc Domain Exploration (\ga), a genetic algorithm with a guided local search.
+
+
+\iffalse
+Using the domain formalization in \secref{sec:Domain}, \ga addresses the problem as follows: 
+\begin{problem}[DS-DSE]
+	\label{p:dse}
+	\normalfont{Given a domain \textit{G} and a HW budget $N$ (area), find a HW/SW partition of \textit{T} (the set of domain function types) that maximizes average throughput improvement \footnote{In DSE problem, there are multiple objectives, e.g. throughput, delay, power consumption, and area. To simplify problem and clarify result discussion, this paper only focuses on one objective throughput with the fixed area limitation (area). Multiple-objective DS-DSE problems will be in the future work.} over pure SW execution for all $\textit{g} \in \textit{G}$.}
+\end{problem}
+\fi
+
+
+This section introduces \ga stepwise with increasing complexity. It first introduces the baseline genetic algorithm \emph{\garand} which outlines general principles and configurations. It then extends the algorithm by a guided local search (GLS) to enhance the exploration performance. 
+
+
+\input{tex/GA-random}
+\input{tex/GA-gls}
+
+
+
+ %The heuristics methods are comprised of an algorithm to explore design space and a fast evaluation/estimation to judge the performance/benefit of each iteration/selection.
+
+%Given the very large design space, methods for efficiently traversing the design space, such as genetic algorithms \cite{abdeen2014multi}, simulated annealing \cite{liang2013hardware}, tabu search \cite{wu2013efficient}, and greedy algorithms \cite{tang2015hardware}, are important. 
+
+% need to describe the problem.
+% see also end of 3.2 
+
+
+
