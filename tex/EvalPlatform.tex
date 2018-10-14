@@ -11,7 +11,7 @@ To balance flexibility and efficiency, domain platform includes hardware acceler
 	%\vspace{-6pt}
 	\caption{Target Platform}
 	\label{fig:plat}
-	\vspace{-4pt}
+	%\vspace{-4pt}
 \end{figure}
 
 \figref{fig:plat} illustrates the target platform for the context of this work. A streaming application $A$,$B$,$C$,$D$ is mapped across SW and HW. Each HWACC has a dedicated SPM. All HWACCs are aggregated to a HW partition which a shared SPM across all HWACCs. HWACCs can communicate with each other; their communication traffic is hidden from system communication fabric (e.g. $B$, $C$). For simplicity, we assume direct n:n communication within the HW partition. Conversely, HWACCs and SW kernels communicate through the system streaming fabric (e.g. $A$ to $B$, and $C$ to $D$) which results in throughput penalties.

@@ -1,11 +1,11 @@
-\subsection{Analytic Evaluation}
+\subsection{Analytic Evaluation (AE)}
 \label{sec:Ana}
 
 Performance analysis in context of DS-DSE is concerned about overall trends. Hence, the finer grained scheduling details of a TLM simulation are less important. As \ga targets streaming applications, the steady state performance is most important. 
 
 The kernels in a streaming application operate as producers / consumers over the streaming data creating a pipeline. \figref{fig:Pipe} visualizes the pipeline execution for two HWACCs and one SW core. Each stage overlaps communication (in/out) with processing due to double buffering. Actors execute concurrently given their dependencies across different components. Actors mapped to the same component execute sequentially (e.g. in \emph{S8}).
 
-Our analytical model computes the throughput of an application based on the inter-kernel pipelined execution~\cite{Teimouri_DAC_2015}.
+\newtext{Our Analytic Evaluation (AE) model} computes the throughput of an application based on the inter-kernel pipelined execution~\cite{Teimouri_DAC_2015}.
 At this abstraction, the throughput only depends on the pipe latency which is determined by the slowest processing component (or communication).
 
 \begin{figure}[h]
@@ -20,7 +20,7 @@ At this abstraction, the throughput only depends on the pipe latency which is de
 \end{figure}
 
 
-Eq.~\eqref{eq:pipe} symbolically summarizes the analytical model. The estimated throughput is equal to output volume per iteration $D_{C}(out)$ over the pipe latency $L_{Pipe}$. \newtext{$L_{Pipe}$ is the maximum latency of SW ($L_{SW_i}$), HW ($L_{HW_j}$), and each layer of communication fabric ($L_{CE_k}$). }
+Eq.~\eqref{eq:pipe} symbolically summarizes the AE model. The estimated throughput is equal to output volume per iteration $D_{C}(out)$ over the pipe latency $L_{Pipe}$. \newtext{$L_{Pipe}$ is the maximum latency of SW ($L_{SW_i}$), HW ($L_{HW_j}$), and each layer of communication fabric ($L_{CE_k}$). }
 
 \begin{equation}
 \begin{split}

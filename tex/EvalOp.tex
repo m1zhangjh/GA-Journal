@@ -3,7 +3,7 @@
 
 To set the stage for our proposed domain DSE approach \newtext{(DSS and \ga)},
 this sections introduces our assumptions / formalization about the
-target platform in~\secref{sec:Platform}, \newtext{and different evaluation options of domain platform, Analytic Evaluation} in~\secref{sec:Ana} and Domain Score (DS) in~\secref{sec:ds}. ~\secref{sec:eva:sum} \newtext{discusses the accuracy and speed trade-off of these evaluation options.}
+target platform in~\secref{sec:Platform}, \newtext{and different evaluation options of domain platform, Analytic Evaluation (AE)} in~\secref{sec:Ana} and Domain Score (DS) in~\secref{sec:ds}. ~\secref{sec:eva:sum} \newtext{discusses the accuracy and speed trade-off of these evaluation options.}
 
 \input{tex/EvalPlatform.tex}
 \input{tex/EvalAna.tex}
@@ -17,12 +17,13 @@ To compare the the evaluation approaches in terms of accuracy and speed, we anal
 \tabref{tab:fidelity} illustrates the trade-off looking at fidelity instead of accuracy as the evaluation approaches are compare design alternatives. TLM is defined as 100\% fidelity for this comparison.
 
 \begin{table}[h]
-	\caption{Fidelity and Speed: DS, Analytic, TLM}
+	\caption{Fidelity and Speed: DS, \newtext{AE}, TLM}
 	\label{tab:fidelity}
+	\centering
 	%\vspace{-10pt}
 	\begin{tabular}{r||c|c|c}
 		\toprule
-		  & \textbf{DS}& \textbf{Analytic}& \textbf{TLM}\\
+		  & \textbf{DS}& \textbf{AE}& \textbf{TLM}\\
 		\hline
 		\midrule
 		\textbf{Fidelity} & 89.07\%& 95.68\%& 100\%\\
@@ -34,4 +35,4 @@ To compare the the evaluation approaches in terms of accuracy and speed, we anal
 	\end{tabular}
 \end{table} 
 
-Fidelity drops with abstraction: analytical with 95.68\% and DS with 89.07\%. At the same time, abstraction yields dramatic speedups of 6 orders of magnitude from TLM to analytical and another order of magnitude to DS. When evaluating a whole domain, DS is even 3 orders of magnitude faster than analytical (assuming 100 apps in the domain) due to inherently incorporating all applications. In result, DS is preferred for rapid analysis, whereas the analytical if more accuracy is needed. TLM simulation is too slow for DS-DSE.
+Fidelity drops with abstraction: AE with 95.68\% and DS with 89.07\%. At the same time, abstraction yields dramatic speedups of 6 orders of magnitude from TLM to AE and another order of magnitude to DS. When evaluating a whole domain, DS is even 3 orders of magnitude faster than AE (assuming 100 apps in the domain) due to inherently incorporating all applications. In result, DS is preferred for rapid analysis, whereas the AE if more accuracy is needed. TLM simulation is too slow for DS-DSE.

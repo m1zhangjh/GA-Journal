@@ -1,22 +1,30 @@
 \section{Introduction}
 \label{sec:introduction}
 
-The pressing need for higher performance and efficiency pushes designers toward specialization -- navigating the efficiency / flexibility trade-off as visualized in \figref{fig:tradeOffArch}. Custom hardware (HW) implemented in an ASIC offers the highest efficiency and is combined the software cores to create application-specific platforms. However, (super-) specialization for each application individually is not a sustainable due to extremely high Non-Recurring Engineering (NRE) costs, limited deployment volumes and time to market pressure. Fully programmable but less specialized platforms (e.g. \begin{wrapfigure}{l}{0.5\linewidth}
+The pressing need for higher performance and efficiency pushes designers toward specialization -- navigating the efficiency / flexibility trade-off as visualized in \figref{fig:tradeOffArch}. Custom hardware (HW) implemented in an ASIC offers the highest efficiency and is combined the software cores to create application-specific platforms. However, (super-) specialization for each application individually is not a sustainable due to extremely high Non-Recurring Engineering (NRE) costs, limited deployment volumes and time to market pressure. Fully programmable but less specialized platforms (e.g. CPUs,  DSPs, GPUs) can be deployed much more widely to recover the NRE, but are magnitudes slower and less efficient. Domain-specific platforms can bridge the efficiency/flexibility gap, aiming at near ASIC performance and efficiency with sufficient flexibility to support applications within a domain (without necessarily being Turing complete). They dramatically increase the deployment potential making it much easier to recover the NRE. \newtext{However, this requires to broaden specialization from a narrow application focus to a more general domain specialization.} To enable scalable domain-specific computing, domain-aware innovations in design methodologies, tools, and architectures are needed. 
+
+
+\begin{figure}
+	%\vspace{-4pt}
+	\centering
+	\includegraphics[width=.6\linewidth]{fig/pTradeOff.pdf}
 	%\vspace{-6pt}
-	\begin{center}
-		\includegraphics[width=\linewidth]{fig/pTradeOff.pdf}
-	\end{center}
-	%\vspace{-10pt}
 	\caption{Flexibility / Efficiency Trade-Off}
 	\label{fig:tradeOffArch}
-	\vspace{-4pt}
-\end{wrapfigure}
-CPUs,  DSPs, GPUs) can be deployed much more widely to recover the NRE, but are magnitudes slower and less efficient. Domain-specific platforms can bridge the efficiency/flexibility gap, aiming at near ASIC performance and efficiency with sufficient flexibility to support applications within a domain (without necessarily being Turing complete). They dramatically increase the deployment potential making it much easier to recover the NRE. This, however,
-requires to broaden specialization from the narrow application focus to a more general domain specialization. To enable scalable domain-specific computing, domain-aware innovations in design methodologies, tools, and architectures are needed. 
+	%\vspace{-4pt}
+\end{figure}
 
 
-
-
+%\begin{wrapfigure}{l}{0.5\linewidth}
+%	%\vspace{-6pt}
+%	\begin{center}
+%		\includegraphics[width=\linewidth]{fig/pTradeOff.pdf}
+%	\end{center}
+%	%\vspace{-10pt}
+%	\caption{Flexibility / Efficiency Trade-Off}
+%	\label{fig:tradeOffArch}
+%	\vspace{-4pt}
+%\end{wrapfigure}
 
 %\begin{figure}[t]
 %    \centering
@@ -53,25 +61,25 @@ Designing domain-specific platforms poses new challenges.
 While mapping multiple applications on an existing platform already received significant attention   \cite{kuang2005partitioning,wu2006low,abdeen2014multi,tang2015hardware}, 
 designing domain platforms is less studied. 
 Current DSE approaches primarily focus on a single application (one task graph) in isolation and do not address the domain optimization opportunities. 
-The penalty of the narrow application focus is illustrated in \figref{fig:platApp}. Two platforms are each customized for an individual application, one accelerating $A$, $B$ and the other $E$, $F$. Executing each app on the other's platform results in low performance (48\%, 46\%).  Broadening the scope and considering both applications has tremendous benefits. The domain platform in \figref{fig:platDS} accelerates $C$, $D$ common to both applications. Now, both applications benefit from customization and execute at performance close to the own dedicated platform (92\%, 86\%). In order to explore the benefits of domain-specific platforms,  novel domain DSE tools and methodologies are needed that can identify functional and structural similarities across domain applications, utilize them for domain specialization and rapidly evaluate the potential benefits for applications within a domain.
+The penalty of the narrow application focus is illustrated in \figref{fig:platApp}. Two platforms are each customized for an individual application, one accelerating $A$, $B$ and the other $E$, $F$. Executing each app on the other's platform results in low performance (48\%, 46\%).  Broadening the scope and considering both applications has tremendous benefits. The domain platform in \figref{fig:platDS} accelerates $C$, $D$ common to both applications. Now, both applications benefit from customization and execute at performance close to the own dedicated platform (92\%, 86\%). In order to explore the benefits of domain-specific platforms,  novel domain DSE tools and methodologies are needed that can identify functional and structural similarities across domain applications, utilize them for domain specialization, and rapidly evaluate the potential benefits for applications within a domain.
 
-\newtext{This paper introduces a domain-specific design flow to aid HW/SW partitioning when designing a platform for a domain of applications. The key insight is to identify both behavioral (functional) and structural similarities across applications in a domain, and then evaluate benefits of the commonalities in Domain DSE for HW/SW partitioning to optimize performance across all domain applications.}
+\newtext{This paper introduces a domain-specific design flow to aid HW/SW partitioning when designing a platform for a domain of applications. The key insight is to identify both behavioral (functional) and structural similarities across applications in a domain, and then evaluate benefits of the similarities in Domain DSE for HW/SW partitioning to optimize performance across all domain applications.}
 
-\newtext{This paper introduces two novel Domain-Specific DSE, Dynamic Score Selection (DSS) and GenetIc Domain Exploration (GIDE), to enable the domain-specific platform design. These DSE methods focus on streaming applications} (e.g. video analytics and software define radio) targeting platforms with many accelerators. DSS and \ga broaden the scope of Greedy Algorithm and Genetic Algorithms (GA) from an individual to a domain of applications.
-\newtext{In DSS, Domain Score (DS) is introduced to fast estimate the benefits using relative comparison in Greedy Algorithm.} To speed up performance analysis and keep high accuracy in the evaluation, \ga utilizes high level analytical models. \ga speeds up traversing the enormous design space using guided local search with a hybrid evaluation combining DS and  Analytic evaluation. In addition, their individual evaluation approaches are evaluated in detail to quantify their benefits in speed and accuracy. To the best of our knowledge, DSS and \ga \newtext{are the first greedy and genetic algorithms for domain design space exploration. In a nutshell, the contributions of this paper are:}
+\newtext{This paper introduces two novel Domain-Specific DSE, Dynamic Score Selection (DSS) and GenetIc Domain Exploration (GIDE), to enable the domain-specific platform design. These DSE methods focus on streaming applications (e.g. video analytics and software define radio) targeting platforms with many accelerators, which are promising architectures for high performance and power-efficient computing. DSS and GIDE broaden the scope of Greedy Algorithm and Genetic Algorithms (GA) from an individual application to a domain of applications.}
+\newtext{In DSS, Domain Score (DS) is introduced to fast estimate the benefits using relative comparison in Greedy Algorithm.} To speed up performance analysis and keep high accuracy in the evaluation, \ga utilizes high level analytical models. \ga speeds up traversing the enormous design space using guided local search with a hybrid evaluation combining DS and  Analytic Evaluation (AE). In addition, their individual evaluation approaches are evaluated in detail to quantify their benefits in speed and accuracy. To the best of our knowledge, DSS and \ga \newtext{are the first greedy and genetic algorithms for domain design space exploration. In a nutshell, the contributions of this paper are:}
 
 %This paper introduces GenetIc Domain Exploration (\ga), a novel Domain-Specific DSE enabling the domain-specific platform design process.
 %\ga focuses on streaming applications (e.g. video analytics and software define radio) targeting platforms with many accelerators. \ga broadens the scope of Genetic Algorithms (GA) from an individual to a domain of applications. It defines assessing the benefit of a domain platform for its applications as the average throughput improvement over all applications. To speed up performance analysis in the evaluation, \ga utilizes high level analytical models. \ga speeds up traversing the enormous design space using guided local search with a hybrid evaluation combining Domain Score (DS) and  Analytic evaluation. In addition, its individual evaluation approaches are evaluated in detail to quantify their benefits in speed and accuracy. To the best of our knowledge, \ga is the first genetic algorithm for domain design space exploration. In a nutshell, the contributions of this paper are:
 
 \begin{enumerate}
- \item Defining of quantifiable domain features to express the similarity among applications.
- \item Introducing of a domain analyzer to extract domain features from applications.
- \item Introducing Domain Score (DS) to compare relative benefit of a platform in domain level.
- \item Accelerating the evaluation of domain-platforms fitness for a group of applications through Analytic Evaluation.
- \item Introducing the first greedy algorithm Dynamic Score Selection (DSS) and genetic algorithm GenetIc Domain Exploration (GIDE) for domain-specific design space exploration. 
- \item In \ga, accelerating the design space traversal through guided local search using a hybrid of DS and analytic evaluation.
- \item Exploring the speed versus accuracy trade-off for domain exploration.
- \item Providing a methodology to evaluate platforms in context of domains.
+    \item Defining quantifiable domain features to express the similarities among applications.
+    \item Providing a domain analyzer to extract domain features from applications.
+    \item Introducing Domain Score (DS) to compare relative benefit of a platform in domain level.
+    \item Accelerating the evaluation of domain-platforms fitness for a group of applications through Analytic Evaluation (AE).
+    \item Introducing the first greedy algorithm Dynamic Score Selection (DSS) using DS for rapid Domain-Specific Design Space Exploration (DS-DSE).
+    \item Introducing the first genetic algorithm GenetIc Domain Exploration (GIDE) for DS-DSE. In \ga, accelerating the design space traversal through guided local search using a hybrid of DS and AE.
+    \item Providing a methodology to evaluate platforms in context of domains.
+    \item Exploring the speed versus accuracy trade-off for domain exploration.
 \end{enumerate}
 
 %One major contribution of this paper encoding domain platform options to GA chromosomes coupled with the guided local search to narrow down the domain design space. For the GA guided local search, this paper proposes two domain evaluation options: (1)  which offers faster evaluation, but lower accuracy. (2) Analytical which offers higher accuracy but slower evaluation. The GA algorithm is coupled with multiple variations of guided local search (DSS, analytical, or hybrid) to create a balance between domain exploration time and evaluation accuracy (which can lead to higher domain throughput). 
