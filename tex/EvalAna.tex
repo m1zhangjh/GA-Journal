@@ -1,11 +1,11 @@
 \subsection{Analytic Evaluation (AE)}
 \label{sec:Ana}
 
-Performance analysis in context of DS-DSE is concerned about overall trends. Hence, the finer grained scheduling details of a TLM simulation are less important. As \ga targets streaming applications, the steady state performance is most important. 
+Performance analysis in the context of DS-DSE is concerned about overall trends. Hence, the finer grained scheduling details of a TLM simulation are less important. As Domain DSE targets streaming applications, the steady state performance is most important. 
 
 The kernels in a streaming application operate as producers / consumers over the streaming data creating a pipeline. \figref{fig:Pipe} visualizes the pipeline execution for two HWACCs and one SW core. Each stage overlaps communication (in/out) with processing due to double buffering. Actors execute concurrently given their dependencies across different components. Actors mapped to the same component execute sequentially (e.g. in \emph{S8}).
 
-\newtext{Our Analytic Evaluation (AE) model} computes the throughput of an application based on the inter-kernel pipelined execution~\cite{Teimouri_DAC_2015}.
+\newtext{Our Analytic Evaluation (AE) model} computes the throughput of an application based on the inter-kernel pipelined execution~\cite{Teimouri_TCAD_2018}.
 At this abstraction, the throughput only depends on the pipe latency which is determined by the slowest processing component (or communication).
 
 \begin{figure}[h]

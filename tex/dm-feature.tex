@@ -1,6 +1,6 @@
 \subsection{Domain Features}
 \label{sec:features}
-Domain features lay the foundation for automatic exploration. It is essential to capture behavioral similarity to assess processing needs, and structural similarities to assess communication / topology requirements. Aligned with the domain definition, we identify commonly used functions and function patterns. We express common functions as the function types of actors that repeat within and across applications. Function patterns are repeating compositions these function types (i.e. identical subgraphs). Different lengths of compositions are considered. For example, application $g0$ in Fig.~\ref{fig:Apps}, has three, two and one composition of a degree one, two and three, respectively. The function type composition $\{t_{B}, t_{C}\}$ (which is of degree 2) appears in application $g0$ (actors $B0$,$C0$) and $g1$ ($B1$,$C1$). \tabref{tab:egFeature} lists the compositions of the domain.
+Domain features lay the foundation for automatic exploration. It is essential to capture behavioral similarity to assess processing needs, and structural similarities to assess communication / topology requirements. Aligned with the domain definition, we identify commonly used functions and function patterns. We express common functions as the function types of actors that repeat within and across applications. Function patterns are repeating compositions of these function types (i.e. identical subgraphs). Different lengths of compositions are considered. For example, application $g0$ in Fig.~\ref{fig:Apps}, has three, two and one composition of a degree one, two and three, respectively. The function type composition $\{t_{B}, t_{C}\}$ (which is of degree 2) appears in application $g0$ (actors $B0$,$C0$) and $g1$ ($B1$,$C1$). \tabref{tab:egFeature} lists the compositions of the domain.
 
 %removed the detour of instances. Directly explained it as types. no addl. formula neede
 %The definitions of actor composition $c$ and function type composition $C$ are given in Eq.~\ref{eq:comps}.   
@@ -30,7 +30,7 @@ P(C_i) = (\sum_{g_j \in G} \left\vert \{ Instance(C_i) \in g_j \} \right\vert) /
 \end{equation}
 
 
-$P$ is probability that an instance of composition $C_i$ appears in a domain application. The composition $\{t_{B}, t_{C}\}$ in Fig.~\ref{fig:Apps} and Table~\ref{tab:egFeature} appears in all applications ($P$ = 100\%). Whereas $\{t_A, t_B\}$ and $\{t_C, t_D\}$ each appear only in one ($P$ =50\%).  
+$P$ is probability that an instance of composition $C_i$ appears in a domain application. The composition $\{t_{B}, t_{C}\}$ in Fig.~\ref{fig:Apps} and Table~\ref{tab:egFeature} appears in all applications ($P$ = 100\%). Whereas $\{t_A, t_B\}$ and $\{t_C, t_D\}$ each appears only in one ($P$ =50\%).  
 
 A key challenge to enable domain DSE is how to identify processing and communication demands across applications which are necessary to guide resource allocation. However, considering each individual application is impractical. To obtain a domain-level view, we aggregate the demands for each composition as defined in Eq.~\eqref{eq:demand}.
 

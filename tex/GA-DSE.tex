@@ -4,20 +4,42 @@
 Novel exploration approaches are needed that broaden the scope of DSE from single application to a domain of applications in order to design a domain-specific platforms. The enormous design space renders exhaustive search infeasible, requiring heuristics for sparse sampling. Genetic Algorithm is one of efficient heuristics algorithms with high flexibility. This section presents GenetIc Domain Exploration (\ga), a genetic algorithm with a guided local search.
 
 
-\iffalse
-Using the domain formalization in \secref{sec:Domain}, \ga addresses the problem as follows: 
-\begin{problem}[DS-DSE]
-	\label{p:dse}
-	\normalfont{Given a domain \textit{G} and a HW budget $N$ (area), find a HW/SW partition of \textit{T} (the set of domain function types) that maximizes average throughput improvement \footnote{In DSE problem, there are multiple objectives, e.g. throughput, delay, power consumption, and area. To simplify problem and clarify result discussion, this paper only focuses on one objective throughput with the fixed area limitation (area). Multiple-objective DS-DSE problems will be in the future work.} over pure SW execution for all $\textit{g} \in \textit{G}$.}
-\end{problem}
-\fi
+
+%Using the domain formalization in \secref{sec:Domain}, \ga addresses the problem as follows: 
+%\begin{problem}[DS-DSE]
+%	\label{p:dse}
+%	\normalfont{Given a domain \textit{G} and a HW budget $N$ (area), find a HW/SW partition of \textit{T} (the set of domain function types) that maximizes average throughput improvement \footnote{In DSE problem, there are multiple objectives, e.g. throughput, delay, power consumption, and area. To simplify problem and clarify result discussion, this paper only focuses on one objective throughput with the fixed area limitation (area). Multiple-objective DS-DSE problems will be in the future work.} over pure SW execution for all $\textit{g} \in \textit{G}$.}
+%\end{problem}
 
 
-This section introduces \ga stepwise with increasing complexity. It first introduces the baseline genetic algorithm \emph{\garand} which outlines general principles and configurations. It then extends the algorithm by a guided local search (GLS) to enhance the exploration performance. 
+This section introduces \ga stepwise with increasing complexity. It first introduces the baseline genetic algorithm \emph{\garand} which outlines general principles and configurations. It then extends the algorithm by \newtext{a guided local search (LS) with 3 versions} to enhance the exploration performance. 
 
 
 \input{tex/GA-random}
 \input{tex/GA-gls}
+
+
+\subsection{\ga Versions Comparison}
+
+\begin{table}[h]
+	\caption{Different \ga \newtext{Comparison}}
+	\label{tab:GIDE}
+	\centering
+	\begin{tabular}{p{0.29\linewidth}|p{0.12\linewidth}|p{0.1\linewidth}|p{0.13\linewidth}|p{0.12\linewidth}}
+		\toprule
+		   & GIDE-RANDOM & GIDE-DS  & GIDE-ANALYTIC & GIDE-HYBRID \\
+		\hline
+		\midrule
+		\textbf{Local Search} & - & Y & Y & Y \\
+		\hline
+		\textbf{Domain Score guided} & - & Y & - & Y \\
+		\hline
+		\textbf{Analytic Eval guided} & - & - & Y & Y \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+\tabref{tab:GIDE} \newtext{summaries the different versions of GIDE described in previous sections.} \garand \newtext{is normal genetic algorithm  without guided local search in mutation.} \gads and \gaana \newtext{are genetic algorithms with one level guided local search.} \gads \newtext{uses the Domain Score (DS) to guide local search, which has high speed but low accuracy of estimation.} While \gaana \newtext{has slow but high accurate guided local search, using Analytic Evaluation (AE).} \gah \newtext{has two-level guided, combining DS and AE, which balance the speed and accuracy.}  
 
 
 

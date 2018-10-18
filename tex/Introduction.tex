@@ -94,4 +94,14 @@ With this, \ga enables rapid domain design space exploration producing high qual
 %The benefits of \ga are demonstrated using 40 applications from the video analytics domain based on OpenVX \cite{Intel, AMD}, as well as varying synthetic domains. Results are compared against optimal results (obtained through exhaustive search) wherever possible, and an existing heuristic approach - Domain Score Selection (DSS)~\cite{zhang100ds}. \ga reaches 99.8\% and 97.6\% of domain optimal throughput for OpenVX and synthetic domains, with $10^{13}$ times faster exploration than exhaustive search. 
 %Compared to the greedy DSS, \ga achieves 10.65\%  and 19.81\% higher domain throughput improvement for OpenVX and synthetic domains. With this, \ga enables rapid domain design space exploration producing high quality results.
 
-\newtext{This paper is organized as follows:} \secref{sec:related} summarizes the related work. \secref{sec:Domain} identifies domain features metrics and presents domain features analyzer. \secref{sec:EvaOp} introduces target domain platform and our proposed platform evaluation models. \secref{sec:DSE} defines domain DSE problem. \secref{sec:DSS} introduces the DSS algorithm for domain HW/SW partitioning. \secref{sec:GA} introduces \ga incrementally from genetic algorithm with random mutation to guided local search. \secref{sec:results}  evaluates and analyses DSS and \ga benefits providing detailed performance insights. \secref{sec:generalization} summarizes all algorithms in DSE trade-off. Finally \secref{sec:conclusion} concludes this paper. 
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=.65\linewidth]{fig/Overview.pdf}
+	\caption{Domain DSE Overview}
+	\label{fig:overview}
+\end{figure}
+
+
+\newtext{This paper is organized as follows:} \secref{sec:related} summarizes the related work. \secref{sec:Domain} identifies domain features metrics and presents domain features analyzer. \secref{sec:EvaOp} introduces target domain platform and our proposed platform evaluation models. \secref{sec:DSE} defines domain DSE problem. \secref{sec:DSS} introduces the DSS algorithm for domain HW/SW partitioning. \secref{sec:GA} introduces \ga incrementally from genetic algorithm with random mutation to guided local search. \secref{sec:results}  evaluates and analyses DSS and \ga benefits providing detailed performance insights. 
+%\secref{sec:generalization} summarizes all algorithms in DSE trade-off. 
+Finally \secref{sec:conclusion} concludes this paper. 
