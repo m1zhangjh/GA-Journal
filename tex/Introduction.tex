@@ -52,8 +52,8 @@ The pressing need for higher performance and efficiency pushes designers toward 
     \label{fig:example}
 \end{figure}
 
-When moving to domain-platforms, few large monolithic accelerators make way for many smaller, composable accelerators. They offer 
-configurable acceleration for selected compute-intensive kernels while running the remaining application in SW. Early domain-specific platforms include ACC-rich MPSoC~\cite{cong2014accelerator} or the Function-Level Processor~\cite{tabkhi2016function}. Domain-specific platforms aim at more specialization than typically considered in the platform-based design process, and target hardened implementations as opposed to reconfigurable computing  \cite{wildermann2011operational} paradigms.
+
+When moving to domain-platforms, few large monolithic accelerators make way for many smaller, composable accelerators. They offer configurable acceleration for selected compute-intensive kernels while running the remaining application in SW. Early domain-specific platforms include ACC-rich MPSoC~\cite{cong2014accelerator} or the Function-Level Processor~\cite{tabkhi2016function}. Domain-specific platforms aim at more specialization than typically considered in the platform-based design process, and target hardened implementations as opposed to reconfigurable computing  \cite{wildermann2011operational} paradigms.
 
 %\figref{fig:tradeOffAlg} plots a domain DSE trade-off between exploration time and achievable domain throughput which is the result of identified domain function kernels for hardware acceleration. An exhaustive DSE throughout all possible design options (HW/SW choices over entire domain) can achieve the optimal domain throughput in the cost of excessive exploration time. Heuristic domain DSE algorithms are required that can offer near optimal accuracy with much shorter exploration time (traversing heuristic curve) to guide platform architects for finding the right balance and  HW/SW combinations for a domain.
 
@@ -101,7 +101,6 @@ With this, \ga enables rapid domain design space exploration producing high qual
 	\label{fig:overview}
 \end{figure}
 
-
-\newtext{This paper is organized as follows:} \secref{sec:related} summarizes the related work. \secref{sec:Domain} identifies domain features metrics and presents domain features analyzer. \secref{sec:EvaOp} introduces target domain platform and our proposed platform evaluation models. \secref{sec:DSE} defines domain DSE problem. \secref{sec:DSS} introduces the DSS algorithm for domain HW/SW partitioning. \secref{sec:GA} introduces \ga incrementally from genetic algorithm with random mutation to guided local search. \secref{sec:results}  evaluates and analyses DSS and \ga benefits providing detailed performance insights. 
+\figref{fig:overview} \newtext{describes the flow and challenges of Domain DSE. Domain features are need to be identified and extracted from domain applications. A methodology is necessary to evaluate the performance of domain platform. Domain-level DSE algorithms are needed to explore the large domain design space. This paper is organized as follows:} \secref{sec:related} summarizes the related work. \secref{sec:Domain} identifies domain features metrics and presents domain features analyzer. \secref{sec:EvaOp} introduces target domain platform and our proposed platform evaluation models. \secref{sec:DSE} defines domain DSE problem. \secref{sec:DSS} introduces the DSS algorithm for domain HW/SW partitioning. \secref{sec:GA} introduces \ga incrementally from genetic algorithm with random mutation to guided local search. \secref{sec:results}  evaluates and analyses DSS and \ga benefits providing detailed performance insights. 
 %\secref{sec:generalization} summarizes all algorithms in DSE trade-off. 
 Finally \secref{sec:conclusion} concludes this paper. 
