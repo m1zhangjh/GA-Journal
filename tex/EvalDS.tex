@@ -1,9 +1,9 @@
 \subsection{Domain Score (DS)}
 \label{sec:ds}
 
-\newtext{For a rapid evaluation an even higher abstraction level might be needed to gauge allocation / mapping benefits. For this, we develop the Domain Score (DS). Rather than estimating performance of an individual application on a platform, DS directly assesses costs and benefits of the platform to all applications in a domain.}
-\newtext{DS relies on profiling all domain applications (only required once) to determine the total processing demand for each function type $D_P(t)$ and the communication demand between each function type pair $D_C(t_o,t_i)$. DS allows for relative comparison.} 
-\newtext{DS quantifies the benefits of moving function types $t_{+}$ from SW to HW, and the penalties of moving $t_{-}$ from HW to SW with respect to processing and communication. In contrast to the analytical model, DS computes the score at once for the whole domain (i.e. incorporating all applications). No further aggregation and averaging are required.} 
+\newtext{For a rapid evaluation, an even higher abstraction level might be needed to gauge allocation / mapping benefits. For this, we develop the Domain Score (DS). Rather than estimating performance of an individual application on a platform, DS directly assesses costs and benefits of the platform to all applications in a domain.}
+\newtext{DS relies on profiling all applications (only required once) to determine the total processing demand for each function type $D_P(t)$ and the communication demand between each function type pair $D_C(t_o,t_i)$. DS enables a relative comparison for incremental changes.} 
+\newtext{DS quantifies the benefits of moving function types $t_{+}$ from SW to HW, and the penalties of moving $t_{-}$ from HW to SW with respect to processing and communication. In contrast to the analytic model, DS computes the score at once for the whole domain (i.e. incorporating all applications). No further aggregation and averaging are required.} 
 
 %Given the amount of applications a domain and the myriad domain platform design options, a detailed simulations or detailed analytical approaches that include scheduling effects are prohibitively expensive to execute. Instead, our approach focuses on overall processing demand (i.e. how many operations) of the domain and processing supply by the architecture (symmetric for communication). The dynamic composition score quantifies the benefits moving a composition $C$ from processor to hardware mapping. DS estimates the benefits stemming from processing and communication mapping, scales them using dynamic weights (tuned to domain properties) and includes the additional cost of hardware implementation. 
 
@@ -18,12 +18,12 @@
 \end{equation}
 \endgroup
 
-In Eq.~\eqref{eq:scoreDS}, \newtext{$B_P$ and $B_C$ are the benefits of processing} (~\secref{sub:ben_proc}) and communication (~\secref{sub:ben_comm}) \newtext{if the functions are switched between SW and HW, respectively}. They are calculated considering both aggregated benefits and appearances. $w_P$ and $w_C$ are the weights to scale both benefits. The weights are dynamically adjusted tracking performance bottlenecks, where processing or communication might be more important. Obtaining these weights will be discussed in Sec.~\ref{sub:weight}. %The $cost$ is defined the number of additional function types (i.e. HWACCs) to realize the composition in HW.
+In Eq.~\eqref{eq:scoreDS}, \newtext{$B_P$ and $B_C$ are the benefits of processing} and communication \newtext{when functions are changed in SW/HW mapping, respectively}. They are calculated considering aggregated benefits and appearances. $w_P$ and $w_C$ are the weights to scale both benefits. The weights are dynamically adjusted tracking performance bottlenecks, where processing or communication might be more important. Obtaining these weights will be discussed in Sec.~\ref{sub:weight}. %The $cost$ is defined the number of additional function types (i.e. HWACCs) to realize the composition in HW.
 
 
 \subsubsection{Processing Benefit}
 \label{sub:ben_proc}
-Eq.~\ref{eq:comp} \newtext{estimates the processing benefit $B_P$ as execution time reduction / increase of the domain when mapping function types $t_{+}$ from SW to HW and $t_{-}$ from HW to SW, only taking computation demand and supply into account.}
+Eq.~\ref{eq:comp} \newtext{estimates the processing benefit $B_P$ as execution time reduction / increase of the domain when mapping function types $t_{+}$ from SW to HW and $t_{-}$ from HW to SW, based on computation demand and supply.}
 
 %\vspace{-10pt}
 \begingroup\makeatletter\def\f@size{8.5}\check@mathfonts

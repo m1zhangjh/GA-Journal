@@ -18,14 +18,14 @@
 %	%\vspace{-4pt}
 %\end{wrapfigure}
 
+\figref{fig:GA} overviews our baseline genetic algorithm. The exploration configuration is captured in a set of \emph{chromosomes}. Each chromosome captures HW/SW mapping of each function type (FT) in the domain as a set of genes. After randomly generating an initial population, the \emph{evaluation} analyzes the fitness of each chromosome using the analytic model. The evaluation tracks global top 10\% chromosomes (across all generations). They replace the bottom 10\% in a generation to start a new population. From this, \emph{Selection \& Crossover} selects pairs of promising chromosomes swaps genes among them. To further increase variation, \emph{Mutation} randomly mutates individual genes. The resulting population is evaluated again and the process repeats until the \emph{Termination} condition is reached. The next paragraphs describe the process in detail. 
+
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.5\linewidth]{fig/pGA.pdf}
+	\includegraphics[width=0.6\linewidth]{fig/pGA.pdf}
 	\caption{Genetic Algorithm Overview}
 	\label{fig:GA}
 \end{figure}
-
-\figref{fig:GA} overviews our baseline genetic algorithm. The exploration configuration is captured in a set of \emph{chromosomes}. Each chromosome captures HW/SW mapping of each function type (FT) in the domain as a set of genes. After randomly generating an initial population, the \emph{evaluation} analyzes the fitness of each chromosome using the analytic model. The evaluation tracks global top 10\% chromosomes (across all generations). They replace the bottom 10\% in a generation to start a new population. From this, \emph{Selection \& Crossover} selects pairs of promising chromosomes swaps genes among them. To further increase variation, \emph{Mutation} randomly mutates individual genes. The resulting population is evaluated again and the process repeats until the \emph{Termination} condition is reached. The next paragraphs describe the process in detail. 
 
 
 

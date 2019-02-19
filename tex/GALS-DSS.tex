@@ -3,7 +3,7 @@
 
 \figref{fig:GADSS} illustrates the guided local search used instead of random mutation of \garand. \gads finds the best neighbor of a chromosome $Ch_{cur}$ by exhaustively switching two genes with opposite states, and then evaluates the benefit of each swap using \newtext{the Domain Score (DS),} see~\secref{sec:ds}.
 
-\newtext{After found the best neighbor}, \gads keeps the best neighbor $Ch_{BN}$ (i.e. mutation with the most benefit) over the starting chromosome $Ch_{cur}$. If the best neighbor $Ch_{BN}$ improves DS, it then becomes $Ch_{cur}$ the starting point for the next search and the process repeats. 
+\newtext{After finding the best neighbor}, \gads keeps the best neighbor $Ch_{BN}$ (i.e. mutation with the most benefit) over the starting chromosome $Ch_{cur}$. If the best neighbor $Ch_{BN}$ improves DS, it then becomes $Ch_{cur}$ the starting point for the next search and the process repeats. 
 
 The search terminates if no improvement is found. The last $Ch_{BN}$ becomes one chromosome in next generation. If the first search iteration does not find any improvement, the search terminates immediately and instead of $Ch_{cur}$ a new random chromosome $Ch_{R}$ is inserted. This increases the random variation and thus the chance to escape a local optimum in the following generation(s). The local search process repeats for each chromosome $Ch0' .. Chn'$. 
 

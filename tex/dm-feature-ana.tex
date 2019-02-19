@@ -1,7 +1,7 @@
 \subsection{Domain Analyzer}
 \label{sec:analyzer} 
 
-\newtext{To obtain domain features, domain analyzer extracts the behavioral and structural similarities from the applications within a domain. It expresses these similarities using the domain features defined in} \secref{sec:features}. The computed domain features then feed into our domain-specific DSE described in \secref{sec:DSE}.
+\newtext{To obtain domain features, the domain analyzer extracts the behavioral and structural similarities of applications within a domain. It quantifies the similarities based on the domain features defined in} \secref{sec:features}. The domain features then drive our domain-specific DSE described in \secref{sec:DSE}.
 %This paper primarily focuses on streaming applications, which have significant functional and structural similarities within a domain. The extracted similarities 
 
 Algorithm~\ref{alg:analysis} overviews the domain analyzer. The analyzer is comprised of domain analysis and application analysis. The domain analysis (lines 1-11) first calls application analysis for each application to obtain the list of function type compositions ($CList$ in line3). Then the domain analysis merges compositions from all applications, counts their appearance frequency (lines 4-8), and aggregates their processing and communication demand ($D_P, D_C$ in line 9). Finally, the domain analysis calculates each composition appearance probability ($P$ in line 11) and returns the the domain features as a set of function type compositions.

@@ -1,9 +1,9 @@
 \subsection{Experimental Setup}
 
-Evaluating a Doman DSE requires comparing over large set of applications, approaches and platforms. We use throughput improvement as a primary performance metric for a domain platform. It scales the applications throughput executing on the candidate platform over a complete SW implementation, quantifying speedup. We evaluate \newtext{DSS and} each version of \ga domain platforms, 
-and compare against a full exhaustive search (where possible), \newtext{which evaluate all domain applications on the domain platform, see} \figref{fig:DomainP}.
+Evaluating a Doman DSE requires comparing over large set of applications, approaches and platforms. For the purpose of this paper, we use throughput improvement as a primary performance metric. It scales each application's throughput executing on the candidate platform over a pure SW implementation, quantifying speedup. We evaluate \newtext{DSS and} each version of \ga domain platforms, 
+and compare against a full exhaustive search (where possible).
 
-
+\newtext{The primary aim is to assess performance of all domain applications when executing on the candidate domain-specific platform} \figref{fig:DomainP}.
 To understand the performance difference between domain-specific platform and application-specific platforms we build on the definitions in~\cite{zhang100ds}. Each application has an own OPTimal application-specific architecture (OPT) that maximizes the application throughput, see ~\figref{fig:OOP}. 
 The OPT is obtained through (time consuming) exhaustive search. 
 Executing each application in a domain on its own OPT yields the upper bound: \textbf{Own OPT Platform (OOP)} -- indicating the acceleration potential of a domain given a HW budget. In order to understand the penalty of application-specialization, we consider \textbf{Foreign OPT Platform (FOP)}, see \figref{fig:FOP}. Here, each application is evaluated multiple times, once on each platform in the pool of OPT (all but one being foreign to the application).

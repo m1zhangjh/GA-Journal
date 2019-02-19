@@ -433,8 +433,13 @@
 \newcommand{\todo}[2]{\pdfmarkupcomment[icon=Comment,color=yellow]{#1}{TODO: #2}}
 \newcommand{\done}[2]{\pdfmarkupcomment[color=lime]{#1}{}}
 \newcommand{\update}[2]{\pdfmarkupcomment[color=yellow]{#1}{}}
-\newcommand{\newtext}[1]{\hl{#1}}
 
+%GS change text color instead of using highlight
+% issue with highlight is that it does not work across dynamic elements 
+% such as section numbers or macros
+\newcommand{\newtext}[1]{{\color{redNew}#1}}
+
+\definecolor{redNew}{rgb}{0.99,0.0,0.00}
 \definecolor{red2}{rgb}{0.99,0.80,0.80}
 \definecolor{lightgray}{rgb}{0.9,0.9,0.8}
 \definecolor{lightgray2}{rgb}{1,1,0.6}
